@@ -1,96 +1,64 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
-function SignupForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    skillTeach: "",
-    skillLearn: "",
-  });
+const SignupForm = () => {
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    try {
+      // 🔥 TEMP MOCK (replace with API later)
+      console.log({ name, email, password });
+
+      alert("Account created!");
+      navigate("/login");
+    } catch (err) {
+      alert("Signup failed");
+    }
   };
 
   return (
-    <motion.form
-      initial={{ opacity: 0, y: 80 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-slate-900 p-10 rounded-3xl w-full max-w-lg border border-slate-700 shadow-2xl"
-      onSubmit={handleSubmit}
-    >
-      <h1 className="text-4xl font-bold text-center mb-8 text-cyan-400">
-        Create Account
-      </h1>
+    <div className="glass p-8 rounded-xl w-full max-w-md mx-auto">
+      <h2 className="text-2xl font-bold mb-6">Signup</h2>
 
-      <div className="grid gap-5">
+      <form onSubmit={handleSignup} className="space-y-4">
 
         <input
           type="text"
-          name="name"
-          placeholder="Full Name"
-          value={formData.name}
-          onChange={handleChange}
-          className="p-4 rounded-xl bg-slate-800 border border-slate-700 outline-none focus:border-cyan-400"
+          placeholder="Name"
+          className="w-full p-3 rounded-lg bg-white/10"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
 
         <input
           type="email"
-          name="email"
           placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          className="p-4 rounded-xl bg-slate-800 border border-slate-700 outline-none focus:border-cyan-400"
+          className="w-full p-3 rounded-lg bg-white/10"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
           type="password"
-          name="password"
           placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          className="p-4 rounded-xl bg-slate-800 border border-slate-700 outline-none focus:border-cyan-400"
+          className="w-full p-3 rounded-lg bg-white/10"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
 
-        <input
-          type="text"
-          name="skillTeach"
-          placeholder="Skill You Can Teach"
-          value={formData.skillTeach}
-          onChange={handleChange}
-          className="p-4 rounded-xl bg-slate-800 border border-slate-700 outline-none focus:border-cyan-400"
-        />
+        <button className="w-full bg-blue-600 py-3 rounded-lg hover:bg-blue-700">
+          Create Account
+        </button>
 
-        <input
-          type="text"
-          name="skillLearn"
-          placeholder="Skill You Want To Learn"
-          value={formData.skillLearn}
-          onChange={handleChange}
-          className="p-4 rounded-xl bg-slate-800 border border-slate-700 outline-none focus:border-cyan-400"
-        />
-
-      </div>
-
-      <button
-        type="submit"
-        className="w-full mt-8 bg-cyan-500 hover:bg-cyan-600 py-4 rounded-xl text-lg font-semibold transition"
-      >
-        Create Account
-      </button>
-    </motion.form>
+      </form>
+    </div>
   );
-}
+};
 
 export default SignupForm;

@@ -1,47 +1,34 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-function Sidebar() {
+const Sidebar = () => {
+  const linkClass = ({ isActive }) =>
+    `block px-3 py-2 rounded-lg transition ${
+      isActive ? "bg-purple-600" : "hover:bg-white/10"
+    }`;
+
   return (
-    <div className="w-72 min-h-screen bg-slate-900 border-r border-slate-800 p-8">
+    <div className="h-screen w-64 fixed glass p-6 flex flex-col gap-4">
 
-      <h1 className="text-4xl font-bold text-cyan-400">
-        SkillBridge
-      </h1>
+      <h1 className="text-xl font-bold mb-6">SkillBridge AI</h1>
 
-      <div className="mt-16 flex flex-col gap-8 text-lg">
+      <NavLink to="/dashboard" className={linkClass}>
+        Dashboard
+      </NavLink>
 
-        <Link
-          className="hover:text-cyan-400 transition"
-          to="/dashboard"
-        >
-          Dashboard
-        </Link>
+      <NavLink to="/profile" className={linkClass}>
+        Profile
+      </NavLink>
 
-        <Link
-          className="hover:text-cyan-400 transition"
-          to="/profile"
-        >
-          Profile
-        </Link>
+      <NavLink to="/chat" className={linkClass}>
+        Chat
+      </NavLink>
 
-        <Link
-          className="hover:text-cyan-400 transition"
-          to="/chat"
-        >
-          Chat
-        </Link>
-
-        <Link
-          className="hover:text-cyan-400 transition"
-          to="/ai-mentor"
-        >
-          AI Mentor
-        </Link>
-
-      </div>
+      <NavLink to="/ai-mentor" className={linkClass}>
+        AI Mentor
+      </NavLink>
 
     </div>
   );
-}
+};
 
 export default Sidebar;

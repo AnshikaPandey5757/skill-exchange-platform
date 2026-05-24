@@ -1,74 +1,61 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { useAuth } from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
-function LoginForm() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+const LoginForm = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    try {
+      setLoading(true);
+      await login(email, password);
+      navigate("/dashboard");
+    } catch (err) {
+      alert(err?.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <motion.form
-      initial={{ opacity: 0, y: 80 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-slate-900 p-10 rounded-3xl w-full max-w-md border border-slate-700 shadow-2xl"
-      onSubmit={handleSubmit}
-    >
-      <h1 className="text-4xl font-bold text-center mb-8 text-cyan-400">
-        Welcome Back
-      </h1>
+    <div className="glass p-8 rounded-xl w-full max-w-md mx-auto">
+      <h2 className="text-2xl font-bold mb-6">Login</h2>
 
-      <div className="mb-5">
-        <label className="block mb-2 text-gray-300">
-          Email
-        </label>
+      <form onSubmit={handleLogin} className="space-y-4">
 
         <input
           type="email"
-          name="email"
-          placeholder="Enter email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full p-4 rounded-xl bg-slate-800 border border-slate-700 outline-none focus:border-cyan-400"
+          placeholder="Email"
+          className="w-full p-3 rounded-lg bg-white/10"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
-      </div>
-
-      <div className="mb-7">
-        <label className="block mb-2 text-gray-300">
-          Password
-        </label>
 
         <input
           type="password"
-          name="password"
-          placeholder="Enter password"
-          value={formData.password}
-          onChange={handleChange}
-          className="w-full p-4 rounded-xl bg-slate-800 border border-slate-700 outline-none focus:border-cyan-400"
+          placeholder="Password"
+          className="w-full p-3 rounded-lg bg-white/10"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
-      </div>
 
-      <button
-        type="submit"
-        className="w-full bg-cyan-500 hover:bg-cyan-600 py-4 rounded-xl text-lg font-semibold transition"
-      >
-        Login
-      </button>
-    </motion.form>
+        <button
+          disabled={loading}
+          className="w-full bg-purple-600 py-3 rounded-lg hover:bg-purple-700"
+        >
+          {loading ? "Logging in..." : "Login"}
+        </button>
+
+      </form>
+    </div>
   );
-}
+};
 
 export default LoginForm;

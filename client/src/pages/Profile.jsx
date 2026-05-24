@@ -1,49 +1,49 @@
 import DashboardLayout from "../layouts/DashboardLayout";
+import { useAuth } from "../hooks/useAuth";
 
-function Profile() {
+const Profile = () => {
+  const { user } = useAuth();
+
   return (
     <DashboardLayout>
+      <div className="glass p-8 rounded-xl">
 
-      <div className="bg-slate-900 p-10 rounded-3xl border border-slate-800 max-w-4xl">
+        {/* USER INFO */}
+        <h1 className="text-2xl font-bold">{user?.name || "User Name"}</h1>
+        <p className="text-gray-400">{user?.email}</p>
 
-        <div className="flex items-center gap-8">
+        {/* SKILLS */}
+        <div className="mt-6">
+          <h2 className="text-lg font-semibold mb-3">Skills</h2>
 
-          <div className="w-32 h-32 rounded-full bg-cyan-500"></div>
-
-          <div>
-
-            <h1 className="text-4xl font-bold">
-              Anshika Pandey
-            </h1>
-
-            <p className="text-gray-400 mt-2">
-              Full Stack Developer
-            </p>
-
-            <div className="flex gap-4 mt-5">
-
-              <span className="bg-cyan-500 px-4 py-2 rounded-xl">
-                React
+          <div className="flex flex-wrap gap-3">
+            {["React", "Node.js", "AI Basics", "DSA"].map((skill, i) => (
+              <span
+                key={i}
+                className="px-3 py-1 bg-white/10 rounded-full text-sm"
+              >
+                {skill}
               </span>
+            ))}
+          </div>
+        </div>
 
-              <span className="bg-cyan-500 px-4 py-2 rounded-xl">
-                Spring Boot
-              </span>
+        {/* PROGRESS */}
+        <div className="mt-8">
+          <h2 className="text-lg font-semibold mb-3">Learning Progress</h2>
 
-              <span className="bg-cyan-500 px-4 py-2 rounded-xl">
-                SQL
-              </span>
-
-            </div>
-
+          <div className="w-full bg-white/10 h-3 rounded-full">
+            <div className="w-2/3 h-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"></div>
           </div>
 
+          <p className="text-sm text-gray-400 mt-2">
+            66% completed your learning journey
+          </p>
         </div>
 
       </div>
-
     </DashboardLayout>
   );
-}
+};
 
 export default Profile;

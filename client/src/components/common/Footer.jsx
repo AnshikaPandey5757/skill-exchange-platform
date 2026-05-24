@@ -1,76 +1,43 @@
-function Footer() {
+const Footer = () => {
   return (
-    <footer className="bg-slate-950 border-t border-slate-800 mt-24">
+    <footer className="mt-20 border-t border-white/10 bg-black/40">
+      <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between">
 
-      <div className="max-w-7xl mx-auto px-8 py-16">
-
-        <div className="grid md:grid-cols-4 gap-10">
-
-          <div>
-
-            <h1 className="text-3xl font-bold text-cyan-400">
-              SkillBridge
-            </h1>
-
-            <p className="text-gray-400 mt-5">
-              AI-powered skill exchange platform
-              for the next generation learners.
-            </p>
-
-          </div>
-
-          <div>
-
-            <h2 className="font-bold text-xl mb-5">
-              Product
-            </h2>
-
-            <div className="flex flex-col gap-3 text-gray-400">
-              <p>AI Mentor</p>
-              <p>Skill Matching</p>
-              <p>Live Collaboration</p>
-            </div>
-
-          </div>
-
-          <div>
-
-            <h2 className="font-bold text-xl mb-5">
-              Company
-            </h2>
-
-            <div className="flex flex-col gap-3 text-gray-400">
-              <p>About</p>
-              <p>Careers</p>
-              <p>Contact</p>
-            </div>
-
-          </div>
-
-          <div>
-
-            <h2 className="font-bold text-xl mb-5">
-              Social
-            </h2>
-
-            <div className="flex flex-col gap-3 text-gray-400">
-              <p>Twitter</p>
-              <p>LinkedIn</p>
-              <p>GitHub</p>
-            </div>
-
-          </div>
-
+        <div>
+          <h2 className="text-lg font-bold">
+            SkillBridge <span className="text-purple-400">AI</span>
+          </h2>
+          <p className="text-gray-400 text-sm mt-2">
+            Learn. Connect. Grow with AI-powered mentorship.
+          </p>
         </div>
 
-        <div className="border-t border-slate-800 mt-12 pt-8 text-center text-gray-500">
-          © 2026 SkillBridge. All rights reserved.
-        </div>
+        <div className="flex gap-10 mt-6 md:mt-0 text-sm text-gray-400">
+          <div className="flex flex-col gap-2">
+            <p className="text-white">Product</p>
+            <a href="#">Features</a>
+            <a href="#">Pricing</a>
+          </div>
 
+          <div className="flex flex-col gap-2">
+            <p className="text-white">Company</p>
+            <a href="#">About</a>
+            <a href="#">Careers</a>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <p className="text-white">Support</p>
+            <a href="#">Help</a>
+            <a href="#">Contact</a>
+          </div>
+        </div>
       </div>
 
+      <div className="text-center text-xs text-gray-500 py-4">
+        © {new Date().getFullYear()} SkillBridge AI. All rights reserved.
+      </div>
     </footer>
   );
-}
+};
 
 export default Footer;

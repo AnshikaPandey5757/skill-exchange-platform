@@ -1,51 +1,54 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import {
+  loginUser,
+  getCurrentUser,
+  logoutUser,
+} from "../services/authService";
 
 export const AuthContext = createContext();
 
-function AuthProvider({ children }) {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Check localStorage on app load
   useEffect(() => {
-    const storedUser = localStorage.getItem("skillbridge_user");
+    const initAuth = async () => {
+      try {
+        const res = await getCurrentUser();
+        setUser(res?.user || null);
+      } catch {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-
-    setLoading(false);
+    initAuth();
   }, []);
 
-  // Login Function
-  const login = (userData) => {
-    setUser(userData);
-
-    localStorage.setItem(
-      "skillbridge_user",
-      JSON.stringify(userData)
-    );
+  const login = async (email, password) => {
+    const res = await loginUser(email, password);
+    setUser(res.user);
+    return res;
   };
 
-  // Logout Function
-  const logout = () => {
+  const logout = async () => {
+    await logoutUser();
     setUser(null);
-
-    localStorage.removeItem("skillbridge_user");
   };
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        login,
-        logout,
-        loading,
-      }}
-    >
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
-export default AuthProvider;
+// safe hook (avoid crashes)
+export const useAuthContext = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuthContext must be used inside AuthProvider");
+  }
+  return context;
+};

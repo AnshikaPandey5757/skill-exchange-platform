@@ -2,32 +2,100 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ===== GLOBAL THEME ===== */
+body {
+  @apply bg-[#0B0F1A] text-white font-sans;
+  background: linear-gradient(135deg, #0B0F1A 0%, #1a1635 100%);
+  min-height: 100vh;
 }
 
+/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  background: #050816;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
+/* Custom scrollbar (premium feel) */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #06b6d4;
-  border-radius: 20px;
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
 }
 
-::-webkit-scrollbar-track {
-  background: #0f172a;
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6d28d9, #3b82f6);
+  border-radius: 10px;
 }
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #7c3aed, #2563eb);
+}
+
+/* Glass effect utility */
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+}
+
+.glass:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Glow button */
+.btn-glow {
+  @apply px-4 py-2 rounded-xl font-medium transition;
+  background: linear-gradient(90deg, #7c3aed, #2563eb);
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+}
+
+.btn-glow:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 30px rgba(37, 99, 235, 0.6);
+}
+
+/* Card hover effects */
+.card-hover {
+  @apply transition-all duration-300;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(124, 58, 237, 0.2);
+}
+
+/* Gradient text animation */
+.gradient-text {
+  background: linear-gradient(90deg, #7c3aed, #2563eb, #06b6d4);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
+/* Input focus effect */
+input:focus,
+textarea:focus,
+select:focus {
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+/* Button disabled state */
+button:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Animation delay utilities */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
